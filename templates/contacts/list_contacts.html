@@ -38,7 +38,7 @@
 		{% if contact.birthday %}
 		<div class="flex">
 			<div class="pr2"><i class="icofont-ui-calendar">birfday</i></div>
-			<div>{{ contact.birthday }}</div>
+			<div>{{ contact.birthday|date:"j M Y" }}</div>
 		</div>
 		{% endif %}
 
