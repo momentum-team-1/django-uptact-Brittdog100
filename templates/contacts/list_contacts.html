@@ -38,11 +38,20 @@
 		{% if contact.birthday %}
 		<div class="flex">
 			<div class="pr2"><i class="icofont-ui-calendar">birfday</i></div>
-			<div>{{ contact.birthday|date:"j M Y" }}</div>
+			<div>{{ contact.birthday|date:"M j Y" }}</div>
 		</div>
 		{% endif %}
 
+		{% if contact.notes %}
+		{% for note in contact.notes.all %}
+		<div class="flex">
+			<div>{{ note.text }}</div>
+		</div>
+		{% endfor %}
+		{% endif %}
+
 		<p>
+			<a href="{% url 'add_note' contact_pk=contact.pk %}">Add Note</a><br>
 			<a href="{% url 'edit_contact' pk=contact.pk %}">Edit Contact</a><br>    
 			<a class="red" href="{% url 'delete_contact' pk=contact.pk %}">Delete Contact</a>
 		</p>

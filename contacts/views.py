@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Contact
 from .forms import ContactForm
+from .forms import NoteForm
 
 
 # Create your views here.
@@ -21,6 +22,18 @@ def add_contact(request):
 
     return render(request, "contacts/add_contact.html", {"form": form})
 
+def add_note(request, contact_pk):
+    contact = get_object_or_404(Contact, pk = contact_pk)
+    if request.method == "GET":
+        form = NoteForm
+    else:
+        form = NoteForm(data = request.POST)
+        if form.is_valid():
+            note = form.save(commit = False)
+            note.contact = contact
+            note.save()
+            return redirect(to='list_contacts')
+    return render(request, "notes/add_note.html", {"form": form, "contact": contact})
 
 def edit_contact(request, pk):
     contact = get_object_or_404(Contact, pk=pk)
